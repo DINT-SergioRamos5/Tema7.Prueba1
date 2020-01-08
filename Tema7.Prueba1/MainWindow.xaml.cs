@@ -31,15 +31,16 @@ namespace Tema7.Prueba1
 
             contexto = new BaseDatosInformeEntities();
 
-            contexto.CLIENTES.Load();            
+            contexto.CLIENTES.Load();
 
-            var consulta = from n in contexto.CLIENTES
-                           where n.genero == "Female"
-                           orderby n.nombre
-                           select n;
+            ClientesListBox.DataContext = contexto.CLIENTES.Local;
+            ClienteEliminarComboBox.DataContext = contexto.CLIENTES.Local;
+            ClienteModificarComboBox.DataContext = contexto.CLIENTES.Local;
 
-            ClientesListBox.DataContext = new ObservableCollection<CLIENTE>(consulta.ToList());
-            
+        }
+
+        private void InsertarButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
