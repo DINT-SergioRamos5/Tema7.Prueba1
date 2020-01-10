@@ -14,7 +14,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock>
+                                <TextBlock> 
                                     <Run Text="{Binding id}"></Run>
                                     <Run Text=" - "></Run>
                                     <Run Text="{Binding nombre}" ></Run>
