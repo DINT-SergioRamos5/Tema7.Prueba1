@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl>
-            //Mostrar todos los clientes de la base de datos.
+            <!--Mostrar todos los clientes de la base de datos.-->
             <TabItem Header="ListBox">               
                 <ListBox x:Name="ClientesListBox" ItemsSource="{Binding}">
                     <ListBox.ItemTemplate>
@@ -26,40 +26,40 @@
                 </ListBox>
             </TabItem>
             
-            // Insertar nuevo cliente a la base de datos.
+            <!--Insertar nuevo cliente a la base de datos.-->
             <TabItem Header="Insertar" >                
-                <StackPanel>
+                <StackPanel x:Name="InsertarStackPanel">
                     <TextBlock>Identificador</TextBlock>
-                    <TextBox x:Name="IdInsertarTextBox"></TextBox>
+                    <TextBox Text="{Binding id}" ></TextBox>
                     <TextBlock>Nombre</TextBlock>
-                    <TextBox x:Name="NombreInsertarTextBox"></TextBox>
+                    <TextBox Text="{Binding nombre}" ></TextBox>
                     <TextBlock>Apellido</TextBlock>
-                    <TextBox x:Name="ApellidoInsertarTextBox"></TextBox>
+                    <TextBox Text="{Binding apellido}" ></TextBox>
                     <Button Margin="6" Padding="5,0,5,0" Content="Insertar" HorizontalAlignment="Left" Click="InsertarButton_Click"></Button>
                 </StackPanel>
             </TabItem>
             
-            //Eliminar cliente de la base de datos mediante el ID.
+            <!--Eliminar cliente de la base de datos mediante el ID.-->
             <TabItem Header="Eliminar">
                 <StackPanel>
                     <ComboBox x:Name="ClienteEliminarComboBox" ItemsSource="{Binding}" Width="150" DisplayMemberPath="id" HorizontalAlignment="Left">
 
                     </ComboBox>
-                    <Button Content="Eliminar" Margin="6" Padding="5,0,5,0" HorizontalAlignment="Left"></Button>
+                    <Button Content="Eliminar" Margin="6" Padding="5,0,5,0" HorizontalAlignment="Left" Click="EliminarButton_Click"></Button>
                 </StackPanel>                
             </TabItem>
             
-            //Pedimos el Id del Cliente y podemos modificar sus datos.
+            <!--Pedimos el Id del Cliente y podemos modificar sus datos.-->
             <TabItem Header="Modificar">
                 <StackPanel>
                     <ComboBox x:Name="ClienteModificarComboBox" ItemsSource="{Binding}" Width="150" DisplayMemberPath="id" HorizontalAlignment="Left"></ComboBox>
                     <TextBlock>Identificador</TextBlock>
-                    <TextBox></TextBox>
+                    <TextBox Text="{Binding ElementName= ClienteModificarComboBox, Path= SelectedItem.id}"></TextBox>
                     <TextBlock>Nombre</TextBlock>
-                    <TextBox></TextBox>
+                    <TextBox Text="{Binding ElementName=ClienteModificarComboBox, Path=SelectedItem.nombre}"></TextBox>
                     <TextBlock>Apellido</TextBlock>
-                    <TextBox></TextBox>
-                    <Button Margin="6" Padding="5,0,5,0" Content="Modificar" HorizontalAlignment="Left"></Button>
+                    <TextBox Text="{Binding ElementName=ClienteModificarComboBox, Path=SelectedItem.apellido}"></TextBox>
+                    <Button Margin="6" Padding="5,0,5,0" Content="Modificar" HorizontalAlignment="Left" Click="ModificarButton_Click"></Button>
                 </StackPanel>
             </TabItem>
         </TabControl>        

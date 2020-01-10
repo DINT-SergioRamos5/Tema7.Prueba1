@@ -24,9 +24,11 @@ namespace Tema7.Prueba1
     {
 
         private BaseDatosInformeEntities contexto;
+        private CLIENTE cliente;
 
         public MainWindow()
         {
+           cliente = new CLIENTE();
             InitializeComponent();
 
             contexto = new BaseDatosInformeEntities();
@@ -37,11 +39,25 @@ namespace Tema7.Prueba1
             ClienteEliminarComboBox.DataContext = contexto.CLIENTES.Local;
             ClienteModificarComboBox.DataContext = contexto.CLIENTES.Local;
 
+            InsertarStackPanel.DataContext = new CLIENTE();
         }
 
         private void InsertarButton_Click(object sender, RoutedEventArgs e)
         {
+            contexto.CLIENTES.Add((CLIENTE)InsertarStackPanel.DataContext);
+            contexto.SaveChanges();            
+            InsertarStackPanel.DataContext = new CLIENTE();
+        }
 
+        private void EliminarButton_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.CLIENTES.Remove((CLIENTE)ClienteEliminarComboBox.SelectedItem);
+            contexto.SaveChanges();
+        }
+
+        private void ModificarButton_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.SaveChanges();
         }
     }
 }
