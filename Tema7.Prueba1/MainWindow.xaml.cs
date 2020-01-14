@@ -42,7 +42,7 @@ namespace Tema7.Prueba1
             InsertarStackPanel.DataContext = new CLIENTE();
         }
 
-        private void InsertarButton_Click(object sender, RoutedEventArgs e)
+        private void InsertarButton_Click(object sender, RoutedEventArgs e) 
         {
             contexto.CLIENTES.Add((CLIENTE)InsertarStackPanel.DataContext);
             contexto.SaveChanges();            
