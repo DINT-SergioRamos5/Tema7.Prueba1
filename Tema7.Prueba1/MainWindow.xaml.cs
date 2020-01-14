@@ -25,21 +25,45 @@ namespace Tema7.Prueba1
 
         private BaseDatosInformeEntities contexto;
         private CLIENTE cliente;
+        CollectionViewSource vista;
+        ObservableCollection<CLIENTE> Clientes;
 
         public MainWindow()
         {
-           cliente = new CLIENTE();
-            InitializeComponent();
-
             contexto = new BaseDatosInformeEntities();
+            vista = new CollectionViewSource();
+            vista.Source = contexto.CLIENTES.Local;
 
-            contexto.CLIENTES.Load();
-
-            ClientesListBox.DataContext = contexto.CLIENTES.Local;
-            ClienteEliminarComboBox.DataContext = contexto.CLIENTES.Local;
-            ClienteModificarComboBox.DataContext = contexto.CLIENTES.Local;
-
+            InitializeComponent();
+            contexto.CLIENTES.Include("PEDIDOS").Load();
+            ObservableCollection<CLIENTE> Clientes = contexto.CLIENTES.Local;
+            
+            ClientesListBox.DataContext = Clientes;
+            ClienteEliminarComboBox.DataContext = Clientes;
+            ClienteModificarComboBox.DataContext = Clientes;
+            ClientesDataGrid.DataContext = Clientes; 
+            
             InsertarStackPanel.DataContext = new CLIENTE();
+
+            FilterDataGrid.DataContext = vista;
+            vista.Filter += Vista_Filter;
+        }
+
+        private void Vista_Filter(object sender, FilterEventArgs e)
+        {
+            CLIENTE item = (CLIENTE)e.Item;
+
+            if (FiltroTextBox.Text == "")
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                if (item.nombre.Contains(FiltroTextBox.Text))
+                    e.Accepted = true;
+                else
+                    e.Accepted = false;
+            }
         }
 
         private void InsertarButton_Click(object sender, RoutedEventArgs e) 
@@ -58,6 +82,16 @@ namespace Tema7.Prueba1
         private void ModificarButton_Click(object sender, RoutedEventArgs e)
         {
             contexto.SaveChanges();
+        }
+
+        private void ActualizarButton_Click(object sender, RoutedEventArgs e)
+        {
+            contexto.SaveChanges();
+        }
+
+        private void FiltrarButton_Click(object sender, RoutedEventArgs e)
+        {
+            vista.View.Refresh();
         }
     }
 }

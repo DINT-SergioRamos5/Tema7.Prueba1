@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tema7.Prueba1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Icon="icono.ico">
     <Grid>
         <TabControl>
             <!--Mostrar todos los clientes de la base de datos.-->
@@ -61,6 +61,45 @@
                     <TextBox Text="{Binding ElementName=ClienteModificarComboBox, Path=SelectedItem.apellido}"></TextBox>
                     <Button Margin="6" Padding="5,0,5,0" Content="Modificar" HorizontalAlignment="Left" Click="ModificarButton_Click"></Button>
                 </StackPanel>
+            </TabItem>
+
+            <TabItem Header="DataGrid">
+                <DockPanel LastChildFill="True" Margin="5">
+                    <Button Margin="5" DockPanel.Dock="Bottom" HorizontalAlignment="Left" Content="Actualizar" Click="ActualizarButton_Click"></Button>
+                    <DataGrid x:Name="ClientesDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="150" Header="Identificador" Binding="{Binding id}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="2*" Header="Nombre" Binding="{Binding nombre}"></DataGridTextColumn>
+                            <DataGridTextColumn Width="2*" Header="Apellido" Binding="{Binding apellido}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>                
+            </TabItem>
+
+            <TabItem Header="Filter">
+                <DockPanel LastChildFill="True">
+                    <StackPanel Margin="10" DockPanel.Dock="Top" Orientation="Horizontal">
+                        <TextBlock>Nombre:</TextBlock>
+                        <TextBox x:Name="FiltroTextBox" Width="150" Margin="10,0,10,0"></TextBox>
+                        <Button Padding="10,0,10,0" Click="FiltrarButton_Click">Filtrar</Button>
+                    </StackPanel>
+                    <DataGrid x:Name="FilterDataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="150" Header="Identificador" Binding="{Binding id}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Width="2*" Header="Nombre Completo">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Run Text="{Binding nombre}"></Run>
+                                            <Run Text="{Binding apellido}"></Run>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn  Width="*" Header="Nº de pedidos"  Binding="{Binding PEDIDOS.Count}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </DockPanel>
             </TabItem>
         </TabControl>        
     </Grid>
